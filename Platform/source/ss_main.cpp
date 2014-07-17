@@ -2,5 +2,5 @@
 
 StuffSimExitStatus startStuffSim()
 {
-
+	return StuffSimExitStatus::OK;
 }

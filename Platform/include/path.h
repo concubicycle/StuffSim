@@ -9,6 +9,7 @@ namespace StuffSumPlatform
 	{
 		public:			
 			Path(std::string path);
+			Path(const Path& path);
 			~Path();
 
 			/* Returns the base of the path (that is, path of folder that contains the path target) */
@@ -34,6 +35,6 @@ namespace StuffSumPlatform
 			std::string m_pathString; 
 			std::string m_fullPath;
 
-
+			void initWithString(const std::string& path);
 	};
 }

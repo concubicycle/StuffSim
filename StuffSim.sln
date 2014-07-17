@@ -13,7 +13,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Physics", "Physics\Physics.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LowLevelRendering", "LowLevelRendering\LowLevelRendering.vcxproj", "{4B9C97B8-3C10-4660-A887-08217DE5936F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "..\Platform\Platform\Platform.vcxproj", "{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "Platform\Platform.vcxproj", "{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{4B9C97B8-3C10-4660-A887-08217DE5936F}.Debug|Win32.Build.0 = Debug|Win32
 		{4B9C97B8-3C10-4660-A887-08217DE5936F}.Release|Win32.ActiveCfg = Release|Win32
 		{4B9C97B8-3C10-4660-A887-08217DE5936F}.Release|Win32.Build.0 = Release|Win32
-		{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}.Debug|Win32.Build.0 = Debug|Win32
-		{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}.Release|Win32.ActiveCfg = Release|Win32
-		{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}.Release|Win32.Build.0 = Release|Win32
+		{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}.Debug|Win32.Build.0 = Debug|Win32
+		{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}.Release|Win32.ActiveCfg = Release|Win32
+		{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

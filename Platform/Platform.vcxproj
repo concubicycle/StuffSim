@@ -10,22 +10,8 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\dll_loader.h" />
-    <ClInclude Include="include\path.h" />
-    <ClInclude Include="include\ss_main.h" />
-    <ClInclude Include="include\system_header.h" />
-    <ClInclude Include="include\trim.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\dll_loader.cpp" />
-    <ClCompile Include="src\ss_main.cpp" />
-    <ClCompile Include="src\win\dll_loader.win.cpp" />
-    <ClCompile Include="src\win\main.win.cpp" />
-    <ClCompile Include="src\win\path.win.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}</ProjectGuid>
+    <ProjectGuid>{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}</ProjectGuid>
     <RootNamespace>Platform</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -53,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
-    <SourcePath>$(ProjectDir)\src;$(ProjectDir\src\win;$(SourcePath)</SourcePath>
+    <IncludePath>$(ProjectDir)\include;$(SolutionDir)\shared_include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)\source;$(ProjectDir)\source\win;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -80,6 +66,20 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\dll_loader.h" />
+    <ClInclude Include="include\path.h" />
+    <ClInclude Include="include\ss_main.h" />
+    <ClInclude Include="include\system_header.h" />
+    <ClInclude Include="include\trim.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\dll_loader.cpp" />
+    <ClCompile Include="source\ss_main.cpp" />
+    <ClCompile Include="source\win\dll_loader.win.cpp" />
+    <ClCompile Include="source\win\main.win.cpp" />
+    <ClCompile Include="source\win\path.win.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
