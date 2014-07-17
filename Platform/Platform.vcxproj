@@ -10,9 +10,23 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\dll_loader.h" />
+    <ClInclude Include="include\path.h" />
+    <ClInclude Include="include\ss_main.h" />
+    <ClInclude Include="include\system_header.h" />
+    <ClInclude Include="include\trim.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\dll_loader.cpp" />
+    <ClCompile Include="src\ss_main.cpp" />
+    <ClCompile Include="src\win\dll_loader.win.cpp" />
+    <ClCompile Include="src\win\main.win.cpp" />
+    <ClCompile Include="src\win\path.win.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{12AB5A03-7396-4003-9C14-B9037C05F60B}</ProjectGuid>
-    <RootNamespace>StuffSimUnitTests</RootNamespace>
+    <ProjectGuid>{3B22ACE9-4543-4AE5-B9AB-7A792D8CA9A9}</ProjectGuid>
+    <RootNamespace>Platform</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -38,7 +52,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)\src;$(ProjectDir\src\win;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -63,9 +80,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="allocator_unit_tests.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
