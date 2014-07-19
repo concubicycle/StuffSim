@@ -103,7 +103,7 @@ void StuffSimOS::redirectIOToConsole()
 
 void StuffSimOS::setStdIOTarget(StdIOTarget newTarget)
 {
-	std::lock_guard<std::mutex> guard(StuffSimOS::m_osStateMutex);
+	std::lock_guard<std::mutex> guard(m_osStateMutex);
 
 	switch (newTarget)
 	{
