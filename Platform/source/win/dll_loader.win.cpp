@@ -1,6 +1,6 @@
 #include "dll_loader.h"
 
-using namespace StuffSimPlatform;
+using namespace StuffSim;
 
 struct SharedLibraryLoader::OSSpecificStateImpl
 {
@@ -21,7 +21,7 @@ SharedLibraryLoader::~SharedLibraryLoader()
 }
 
 
-string SharedLibraryLoader::getLoadStatus()
+OSString SharedLibraryLoader::getLoadStatus()
 {
 	if (m_lastLoadStatus == LoadStatus::Failure)
 	{
@@ -39,17 +39,17 @@ string SharedLibraryLoader::getLoadStatus()
 		if (bufLen)
 		{
 			LPCSTR lpMsgStr = (LPCSTR)lpMsgBuf;
-			std::string result(lpMsgStr, lpMsgStr + bufLen);
+			OSString result(lpMsgStr, lpMsgStr + bufLen);
 			LocalFree(lpMsgBuf);
 			return result;
 		}
 		else
 		{
 			//TODO: Use logger here
-			return "Failed to obtain status.";
+			return SS_STR_LIT("Failed to obtain status.");
 		}
 	}
 	
-	return "Success";
+	return SS_STR_LIT("Success");
 }
 

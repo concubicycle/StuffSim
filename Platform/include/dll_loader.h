@@ -1,14 +1,12 @@
-#ifndef SS_DLL_LOADER
-#define SS_DLL_LOADER
+#ifndef SS_DLL_LOADER_H
+#define SS_DLL_LOADER_H
 
-#include "system_header.h"
 #include <cstdint>
 #include <memory>
 #include <string>
+#include "system_header.h"
 
-using std::string;
-
-namespace StuffSimPlatform
+namespace StuffSim
 {
 	class SharedLibraryLoader
 	{
@@ -23,7 +21,7 @@ namespace StuffSimPlatform
 		SharedLibraryLoader();
 		~SharedLibraryLoader();
 
-		string getLoadStatus();
+		OSString getLoadStatus();
 		
 
 	private:

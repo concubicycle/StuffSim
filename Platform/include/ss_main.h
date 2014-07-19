@@ -1,3 +1,6 @@
+#ifndef SS_MAIN_H
+#define SS_MAIN_H
+
 enum class StuffSimExitStatus
 {
 	OK,
@@ -5,3 +8,6 @@ enum class StuffSimExitStatus
 };
 
 StuffSimExitStatus startStuffSim();
+
+
+#endif

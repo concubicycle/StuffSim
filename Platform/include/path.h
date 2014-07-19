@@ -1,17 +1,24 @@
-#include <string>
-#include <trim.h>
+#ifndef SS_PATH_H
+#define SS_PATH_H
+
 #include <cstdint>
 #include <memory>
 
-namespace StuffSumPlatform
-{
+#include "ss_string_util.h"
+
+
+namespace StuffSim
+{	
+	/*
+		A minimal, cross-platform Path class that represents a file or directory path.	
+	*/
 	class Path
 	{
 		public:			
-			Path(std::string path);
+			Path(OSString path);
 			Path(const Path& path);
 			~Path();
-
+						
 			/* Returns the base of the path (that is, path of folder that contains the path target) */
 			Path pathDir();
 
@@ -26,15 +33,25 @@ namespace StuffSumPlatform
 
 			/* Is this a directory? */
 			bool isDir();
+					
+			/* Get the path of the executable */
+			static const OSString getExecutablePath();
+						
 
 		private:
 			struct OSSpecificStateImpl;
 			std::unique_ptr<OSSpecificStateImpl> m_osSpecificState;
 
-			std::string m_drive; //drive/volume on which this path resides. Empty if relative path.
-			std::string m_pathString; 
-			std::string m_fullPath;
+			OSString m_drive; //drive/volume on which this path resides. Empty if relative path.
+			OSString m_pathString; 
+			OSString m_fullPath;
+			static OSString m_executablePath; //current path of executable
 
-			void initWithString(const std::string& path);
+
+			void initWithString(OSString path);
+			
 	};
 }
+
+
+#endif

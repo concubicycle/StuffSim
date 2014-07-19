@@ -1,15 +1,15 @@
 #include "path.h"
-using namespace StuffSumPlatform;
+using namespace StuffSim;
 
-#define VOLUME_PATH_DIVIDER ":\\"
-#define DIR_DIVIDER '\\'
-
+//define 
 struct Path::OSSpecificStateImpl
 {
-
+	const OSString volumePathDivider = SS_STR_LIT(":\\");
+	const OSChar dirDivider = '\\';
 };
 
-Path::Path(std::string path)
+
+Path::Path(OSString path)
 {
 	initWithString(path);
 }
@@ -26,7 +26,7 @@ Path::~Path()
 
 }
 
-void Path::initWithString(const std::string& path)
+void Path::initWithString(OSString path)
 {
 	if (path.empty())
 	{
@@ -34,20 +34,19 @@ void Path::initWithString(const std::string& path)
 		return;
 	}
 
-	std::string trimmedPath = path;
-	trim(trimmedPath);
+	StuffSim::trim(path);
 
 	//if a drive is specified, it's a full path
-	size_t indexOfVolPathDivider = trimmedPath.find(VOLUME_PATH_DIVIDER);
-	if (indexOfVolPathDivider != std::string::npos)
+	size_t indexOfVolPathDivider = path.find(m_osSpecificState->volumePathDivider);
+	if (indexOfVolPathDivider != OSString::npos)
 	{
-		m_drive = trimmedPath[0];
-		m_pathString = trimmedPath.substr(3, trimmedPath.length() - 3);
+		m_drive = path[0];
+		m_pathString = path.substr(3, path.length() - 2);
 	}
 	else
 	{
-		m_drive = "";
-		m_pathString = trimmedPath;
+		m_drive = SS_STR_LIT("");
+		m_pathString = path;
 	}
 }
 
@@ -55,8 +54,8 @@ void Path::initWithString(const std::string& path)
 
 Path Path::pathDir()
 {
-	size_t indexOfLastSlash = m_fullPath.find_last_of(DIR_DIVIDER);
-	if (indexOfLastSlash == std::string::npos)
+	size_t indexOfLastSlash = m_fullPath.find_last_of(m_osSpecificState->dirDivider);
+	if (indexOfLastSlash == OSString::npos)
 	{
 		return Path(m_fullPath);
 	}
@@ -83,3 +82,23 @@ bool Path::isDir()
 {
 	return true;
 }
+
+const OSString Path::getExecutablePath()
+{
+	if (m_executablePath.empty())
+	{
+		OSChar pathBuffer[_MAX_PATH];
+		int pathLen = GetModuleFileNameW(NULL, pathBuffer, _MAX_PATH);
+		m_executablePath = OSString(pathBuffer);
+
+		
+		if (pathLen == 0)
+		{
+			//TODO: log error
+		}
+	}
+	
+	return m_executablePath;
+}
+
+OSString StuffSim::Path::m_executablePath;

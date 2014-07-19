@@ -1,40 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\dll_loader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\path.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ss_main.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\system_header.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\trim.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\dll_loader.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\win\main.win.cpp">
-      <Filter>Source\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="source\win\path.win.cpp">
-      <Filter>Source\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ss_main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\win\dll_loader.win.cpp">
-      <Filter>Source\Windows</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Headers">
       <UniqueIdentifier>{9b57d7be-1e5d-4b95-943e-adbca3bf545f}</UniqueIdentifier>
     </Filter>
@@ -47,5 +13,57 @@
     <Filter Include="Source\Linux">
       <UniqueIdentifier>{77ff2c4b-7ae7-484b-8f45-267090cf3d79}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\ss_system_typenames.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\system_header.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thread_pool.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\dll_loader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\path.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ss_main.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ss_os.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ss_string_util.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\win\path.win.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\ss_os.win.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\ss_string_util.win.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\dll_loader.win.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\main.win.cpp">
+      <Filter>Source\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dll_loader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ss_main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\thread_pool.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
