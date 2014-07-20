@@ -21,7 +21,11 @@ namespace StuffSim
 		Path(const Path& path);
 		~Path();
 
-		/* turns things like C:\A\B\..\C\.\ into C:\A\C */
+		/* Get the path of the executable */
+		//TODO: Create a policy for allowing modification of returned value.. is this possible?
+		static Path getExecutablePath();
+
+		/* Turns things like C:\A\B\..\C\.\ into C:\A\C */
 		void normalize();
 
 		/* Returns the base of the path (that is, path of folder that contains the path target) */
@@ -38,10 +42,6 @@ namespace StuffSim
 
 		/* Is this a directory? */
 		bool isDir() const;
-
-		/* Get the path of the executable */
-		//TODO: Create a policy for allowing modification of returned value.. is this possible?
-		static Path getExecutablePath();
 
 		const OSString& getFullPathStr() const;
 

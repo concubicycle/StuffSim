@@ -10,9 +10,11 @@ struct StuffSimOS::OSStateImpl
 	const HINSTANCE m_appInstance = (HINSTANCE)&__ImageBase; //get the application instance handle
 
 	//console stuff
+	static const WORD maxConsoleLines = 500;
 	int hConHandle;
 	HANDLE lStdHandle;
 	CONSOLE_SCREEN_BUFFER_INFO coninfo;
+	
 };
 
 
@@ -60,7 +62,7 @@ void StuffSimOS::redirectIOToConsole()
 
 	// set the screen buffer to be big enough to let us scroll text
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &(m_osState->coninfo));
-	m_osState->coninfo.dwSize.Y = MAX_CONSOLE_LINES;
+	m_osState->coninfo.dwSize.Y = m_osState->maxConsoleLines;
 	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), m_osState->coninfo.dwSize);
 
 	// redirect unbuffered STDOUT to the console

@@ -12,8 +12,6 @@
 #include "system_header.h"
 #include "ss_string_util.h"
 
-static const WORD MAX_CONSOLE_LINES = 500;
-
 namespace StuffSim
 {
 	class StuffSimOS
@@ -24,7 +22,7 @@ namespace StuffSim
 		~StuffSimOS();
 
 		/*
-			In the future, we may well need a stream so we can direct std io
+			In the future, we may well need a stream so we can direct stdio
 			to whatever streams we pass in. This will allow greater flexibility, 
 			but for now just do this..
 		*/
