@@ -23,7 +23,6 @@
   <ItemGroup>
     <ClCompile Include="source\dll_loader.cpp" />
     <ClCompile Include="source\ss_main.cpp" />
-    <ClCompile Include="source\thread_pool.cpp" />
     <ClCompile Include="source\win\dll_loader.win.cpp" />
     <ClCompile Include="source\win\main.win.cpp" />
     <ClCompile Include="source\win\path.win.cpp" />

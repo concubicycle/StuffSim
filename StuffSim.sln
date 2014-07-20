@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StuffSim", "StuffSim\StuffSim.vcxproj", "{E1625DC9-6B01-4D47-AF22-581C24DE9116}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StuffSimUnitTests", "StuffSimUnitTests\StuffSimUnitTests.vcxproj", "{12AB5A03-7396-4003-9C14-B9037C05F60B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadLib", "ThreadLib\ThreadLib.vcxproj", "{D17206AE-4F5B-45EB-B99B-A0ABF95BE137}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Physics", "Physics\Physics.vcxproj", "{EC70529E-ADFD-4A6C-AE3F-91F8AD1B1466}"
@@ -25,10 +23,6 @@ Global
 		{E1625DC9-6B01-4D47-AF22-581C24DE9116}.Debug|Win32.Build.0 = Debug|Win32
 		{E1625DC9-6B01-4D47-AF22-581C24DE9116}.Release|Win32.ActiveCfg = Release|Win32
 		{E1625DC9-6B01-4D47-AF22-581C24DE9116}.Release|Win32.Build.0 = Release|Win32
-		{12AB5A03-7396-4003-9C14-B9037C05F60B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{12AB5A03-7396-4003-9C14-B9037C05F60B}.Debug|Win32.Build.0 = Debug|Win32
-		{12AB5A03-7396-4003-9C14-B9037C05F60B}.Release|Win32.ActiveCfg = Release|Win32
-		{12AB5A03-7396-4003-9C14-B9037C05F60B}.Release|Win32.Build.0 = Release|Win32
 		{D17206AE-4F5B-45EB-B99B-A0ABF95BE137}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D17206AE-4F5B-45EB-B99B-A0ABF95BE137}.Debug|Win32.Build.0 = Debug|Win32
 		{D17206AE-4F5B-45EB-B99B-A0ABF95BE137}.Release|Win32.ActiveCfg = Release|Win32

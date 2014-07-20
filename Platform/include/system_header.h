@@ -8,6 +8,10 @@
 #include <string>
 #include "ss_system_typenames.h"
 
+//these have to be defined by all implementations because at least one os 
+//requires them. default empty defines.
+#define SS_SL_EXPORT
+#define SS_MARK_GLOBAL
 
 #if defined(_WIN32 ) || defined(_WIN64) || defined(__WIN32__) || defined (__TOS_WIN__) || defined (__WINDOWS__)
 /*~~ WINDOWS ~~*/
@@ -19,9 +23,18 @@
 
 // Defines
 //
-// Exportable objects (dlls) are indicated by the including this keyword 
+// Exportable objects (dlls) are indicated by the including this keyword. 
+// These are already defined as empty for non-windows OS's, so undefine them
+// before redefining to avoid compiler warnings.
+#ifdef SS_SL_EXPORT 
+#undef SS_SL_EXPORT
+#endif
 #define SS_SL_EXPORT __declspec( dllexport )
 
+#ifdef SS_MARK_GLOBAL 
+#undef SS_MARK_GLOBAL
+#endif
+#define SS_MARK_GLOBAL __declspec(selectany)
 
 // Macros
 //
@@ -51,14 +64,13 @@ typedef wchar_t SS_OS_CHAR_TYPENAME;
 
 // Defines
 //
-#define SS_SL_EXPORT
+
 
 
 // Macros
 //
 // Just in case we try to use it. We shouldn't be using OSString much in linux anyway, because normal string suffices. 
 #define SS_STR_LIT(str) str
-
 
 // Typedefs
 //
