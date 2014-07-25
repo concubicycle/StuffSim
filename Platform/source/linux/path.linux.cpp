@@ -30,7 +30,7 @@ Path::Path(const Path& path) //copy
 	: m_osSpecificState(new OSSpecificStateImpl(*(path.m_osSpecificState)))
 	, m_valid(path.m_valid)
 	, m_drive(path.m_drive)
-	, m_fullPath(path.m_fullPath)
+	, m_pathStr(path.m_pathStr)
 	, m_full(path.m_full) { }
 
 
@@ -56,12 +56,12 @@ Path Path::pathDir() const
 
 OSString Path::pathDirStr() const
 {
-	size_t indexOfLastSlash = m_fullPath.find_last_of(OSSpecificStateImpl::m_dirDivider);
+	size_t indexOfLastSlash = m_pathStr.find_last_of(OSSpecificStateImpl::m_dirDivider);
 
-	if (indexOfLastSlash == OSString::npos || indexOfLastSlash == m_fullPath.length() - 1)
-		return m_fullPath;
+	if (indexOfLastSlash == OSString::npos || indexOfLastSlash == m_pathStr.length() - 1)
+		return m_pathStr;
 
-	return m_fullPath.substr(0, indexOfLastSlash + 1);
+	return m_pathStr.substr(0, indexOfLastSlash + 1);
 }
 
 
@@ -79,9 +79,9 @@ Path& StuffSim::Path::operator=(const Path& other)
 	{
 		this->m_osSpecificState.reset(new OSSpecificStateImpl(*(other.m_osSpecificState)));
 		m_valid = other.m_valid;
-		m_fullPath = other.m_fullPath;
+		m_pathStr = other.m_pathStr;
 		m_drive = other.m_drive;
-		m_fullPath = other.m_fullPath;
+		m_pathStr = other.m_pathStr;
 	}
 	return *this;
 }

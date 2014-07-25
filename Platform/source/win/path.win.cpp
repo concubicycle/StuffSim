@@ -34,7 +34,7 @@ Path::Path(const Path& path) //copy
 	: m_osSpecificState(new OSSpecificStateImpl(*(path.m_osSpecificState)))
 	, m_valid(path.m_valid)
 	, m_drive(path.m_drive)
-	, m_fullPath(path.m_fullPath)
+	, m_pathStr(path.m_pathStr)
 	, m_full(path.m_full) { }
 
 
@@ -68,12 +68,12 @@ Path Path::pathDir() const
 
 OSString Path::pathDirStr() const
 {
-	size_t indexOfLastSlash = m_fullPath.find_last_of(OSSpecificStateImpl::m_dirDivider);
+	size_t indexOfLastSlash = m_pathStr.find_last_of(OSSpecificStateImpl::m_dirDivider);
 
-	if (indexOfLastSlash == OSString::npos || indexOfLastSlash == m_fullPath.length() - 1)
-		return m_fullPath;
+	if (indexOfLastSlash == OSString::npos || indexOfLastSlash == m_pathStr.length() - 1)
+		return m_pathStr;
 	
-	return m_fullPath.substr(0, indexOfLastSlash + 1);
+	return m_pathStr.substr(0, indexOfLastSlash + 1);
 }
 
 
@@ -91,9 +91,9 @@ Path& StuffSim::Path::operator=(const Path& other)
 	{
 		this->m_osSpecificState.reset(new OSSpecificStateImpl(*(other.m_osSpecificState)));
 		m_valid = other.m_valid;
-		m_fullPath = other.m_fullPath;
+		m_pathStr = other.m_pathStr;
 		m_drive = other.m_drive;
-		m_fullPath = other.m_fullPath;
+		m_pathStr = other.m_pathStr;
 	}
 	return *this;
 }
@@ -101,13 +101,13 @@ Path& StuffSim::Path::operator=(const Path& other)
 
 Path Path::operator+(const Path& otherPath) const
 {
-	return  (*this) + otherPath.m_fullPath;
+	return  (*this) + otherPath.m_pathStr;
 }
 
 
 Path Path::operator+(const OSString& otherPathString) const
 {
-	bool thisHasSlash = m_fullPath.back() == OSSpecificStateImpl::m_dirDivider;
+	bool thisHasSlash = m_pathStr.back() == OSSpecificStateImpl::m_dirDivider;
 	bool otherHasSlash = otherPathString.front() == OSSpecificStateImpl::m_dirDivider;
 
 	//try to concatenate the paths, assuming that the end of this path is actually a directory
@@ -136,15 +136,15 @@ Path Path::initExecutablePath()
 
 OSString Path::appendPathStr(const OSString& otherPathStr) const
 {
-	bool thisHasSlash = m_fullPath.back() == OSSpecificStateImpl::m_dirDivider;
+	bool thisHasSlash = m_pathStr.back() == OSSpecificStateImpl::m_dirDivider;
 	bool otherHasSlash = otherPathStr.front() == OSSpecificStateImpl::m_dirDivider;
 
 	if (thisHasSlash && otherHasSlash)
-		return m_fullPath + otherPathStr.substr(1, otherPathStr.length() - 1);
+		return m_pathStr + otherPathStr.substr(1, otherPathStr.length() - 1);
 	else if (!thisHasSlash && !otherHasSlash)
-		return m_fullPath + OSSpecificStateImpl::m_dirDivider + otherPathStr;
+		return m_pathStr + OSSpecificStateImpl::m_dirDivider + otherPathStr;
 	else
-		return m_fullPath + otherPathStr;
+		return m_pathStr + otherPathStr;
 }
 
 

@@ -60,7 +60,7 @@ namespace StuffSim
 		static Path s_executablePath;	
 		std::unique_ptr<OSSpecificStateImpl> m_osSpecificState;
 
-		OSString m_fullPath; //path that doesn't include volume. 
+		OSString m_pathStr; //path that doesn't include volume. 
 		OSChar m_drive; //drive/volume on which this path resides. Empty if relative path.
 		bool m_valid;
 		bool m_full;

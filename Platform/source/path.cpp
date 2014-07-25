@@ -11,8 +11,8 @@ void Path::makeFullyResolved()
 	if (m_drive != 0)
 		return;
 
-	m_fullPath = getExecutablePath().appendPathStr(m_fullPath);
-	initWithString(m_fullPath);
+	m_pathStr = getExecutablePath().appendPathStr(m_pathStr);
+	initWithString(m_pathStr);
 }
 
 
@@ -30,16 +30,16 @@ void Path::initWithString(OSString path)
 	m_drive = extractDrive(path);
 
 	if (m_drive == 0) //not a full path
-		m_fullPath = path;
+		m_pathStr = path;
 	else
 	{
-		m_fullPath = path.substr(3, path.length() - 2);
-		m_fullPath = path;
+		m_pathStr = path.substr(3, path.length() - 2);
+		m_pathStr = path;
 	}
 
 	//is it a valid path?
 	//if path is given with drive (fully resolved), just check if it's valid
-	if (m_drive != 0 && isValid()) //we have m_fullPath set in this case.
+	if (m_drive != 0 && isValid()) //we have m_pathStr set in this case.
 	{
 		m_valid = true;
 	}
@@ -69,5 +69,5 @@ bool Path::isFull() const
 
 const OSString& Path::getFullPathStr() const
 {
-	return m_fullPath;
+	return m_pathStr;
 }
