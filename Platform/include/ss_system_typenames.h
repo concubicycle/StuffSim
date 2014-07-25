@@ -4,13 +4,13 @@
 ///////////////////////////////////////////////////////*/
 
 
-#ifndef SS_SYSTEM_TYPENNAMES_H
-#define SS_SYSTEM_TYPENNAMES_H
+#ifndef SSIM_SYSTEM_TYPENNAMES_H
+#define SSIM_SYSTEM_TYPENNAMES_H
 
 
-#define SS_OS_STRING_TYPENAME OSString
-#define SS_STRING_ITERATOR_TYPENAME OSStringIterator
-#define SS_OS_CHAR_TYPENAME OSChar
+#define SSIM_OS_STRING_TYPENAME OSString
+#define SSIM_STRING_ITERATOR_TYPENAME OSStringIterator
+#define SSIM_OS_CHAR_TYPENAME OSChar
 
 
 #endif

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ss_iostream.h" />
     <ClInclude Include="include\dll_loader.h" />
     <ClInclude Include="include\path.h" />
     <ClInclude Include="include\ss_main.h" />
@@ -19,15 +20,20 @@
     <ClInclude Include="include\ss_system_typenames.h" />
     <ClInclude Include="include\system_header.h" />
     <ClInclude Include="include\thread_pool.h" />
+    <ClInclude Include="tests\os_tests.h" />
+    <ClInclude Include="tests\path_tests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\dll_loader.cpp" />
     <ClCompile Include="source\ss_main.cpp" />
+    <ClCompile Include="source\ss_iostream.cpp" />
     <ClCompile Include="source\win\dll_loader.win.cpp" />
     <ClCompile Include="source\win\main.win.cpp" />
     <ClCompile Include="source\win\path.win.cpp" />
     <ClCompile Include="source\win\ss_os.win.cpp" />
     <ClCompile Include="source\win\ss_string_util.win.cpp" />
+    <ClCompile Include="tests\os_tests.cpp" />
+    <ClCompile Include="tests\path_tests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A8C7B474-99AE-4550-A31E-95C7B7CA15CA}</ProjectGuid>
@@ -58,7 +64,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\include;$(SolutionDir)\shared_include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\include;$(SolutionDir)\shared_include;$(ProjectDir)\tests;$(IncludePath)</IncludePath>
     <SourcePath>$(ProjectDir)\source;$(ProjectDir)\source\win;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

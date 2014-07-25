@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <mutex>
+#include <functional>
 
 #include "system_header.h"
 #include "ss_string_util.h"
@@ -43,9 +44,11 @@ namespace StuffSim
 		std::unique_ptr<OSStateImpl> m_osState;
 		std::mutex m_osStateMutex;
 
-		StdIOTarget m_ioTarget;
-
+		StdIOTarget m_currentIOTarget;
+		
 		bool m_isConsoleOpen;
+		
+		std::function<void()> m_onConsoleReady; //TODO: When delegates are implemented, use an internal event here. 
 
 		void redirectIOToConsole();
 	};

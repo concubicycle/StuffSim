@@ -11,12 +11,14 @@ struct StuffSimOS::OSStateImpl
 
 	//console stuff
 	static const WORD maxConsoleLines = 500;
-	int hConHandle;
-	HANDLE lStdHandle;
-	CONSOLE_SCREEN_BUFFER_INFO coninfo;
-	
-};
+	static int hConHandle;
+	static HANDLE lStdHandle;
+	static CONSOLE_SCREEN_BUFFER_INFO coninfo;
 
+};
+int StuffSimOS::OSStateImpl::hConHandle;
+HANDLE StuffSimOS::OSStateImpl::lStdHandle;
+CONSOLE_SCREEN_BUFFER_INFO StuffSimOS::OSStateImpl::coninfo;
 
 StuffSimOS::StuffSimOS() : m_osState(new OSStateImpl), m_isConsoleOpen(false)
 {
@@ -30,19 +32,23 @@ StuffSimOS::StuffSimOS(const StuffSimOS& orig)
 
 StuffSimOS::~StuffSimOS()
 {
-	if (m_isConsoleOpen)
-		closeConsole();
+	//if (m_isConsoleOpen)
+	//	closeConsole();
 }
 
 void StuffSimOS::openConsole()
 {
 	// allocate a console for this app
 	if (!AllocConsole())
-	{
+	{		
 		//TODO: log error
 	}
 	else
+	{
 		m_isConsoleOpen = true;
+		if (m_onConsoleReady)
+			m_onConsoleReady();
+	}
 }
 
 void StuffSimOS::closeConsole()
@@ -56,8 +62,8 @@ void StuffSimOS::closeConsole()
 }
 
 void StuffSimOS::redirectIOToConsole()
-{	
-	openConsole();
+{
+	//openConsole();
 	FILE *fp;
 
 	// set the screen buffer to be big enough to let us scroll text
@@ -72,7 +78,7 @@ void StuffSimOS::redirectIOToConsole()
 	if (m_osState->lStdHandle == INVALID_HANDLE_VALUE)
 	{
 		//TODO: Log error
-		std::string err = this->getLastError();
+		std::string err = getLastError();
 	}
 
 	if (m_osState->hConHandle == -1)
@@ -105,13 +111,22 @@ void StuffSimOS::redirectIOToConsole()
 
 void StuffSimOS::setStdIOTarget(StdIOTarget newTarget)
 {
-	std::lock_guard<std::mutex> guard(m_osStateMutex);
-
 	switch (newTarget)
 	{
 	case StuffSim::StuffSimOS::Console:
-		redirectIOToConsole();
-		break;
+	{
+		m_currentIOTarget = newTarget;
+
+		m_onConsoleReady = [this]() {
+			std::lock_guard<std::mutex> guard(m_osStateMutex);
+			redirectIOToConsole();
+			m_onConsoleReady = [](){};
+		};
+
+		if (m_isConsoleOpen == true)
+			m_onConsoleReady();
+	}
+	break;
 	default:
 		break;
 	}

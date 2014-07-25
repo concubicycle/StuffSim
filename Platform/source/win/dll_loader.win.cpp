@@ -46,10 +46,10 @@ OSString SharedLibraryLoader::getLoadStatus()
 		else
 		{
 			//TODO: Use logger here
-			return SS_STR_LIT("Failed to obtain status.");
+			return SSIM_STR_LIT("Failed to obtain status.");
 		}
 	}
 	
-	return SS_STR_LIT("Success");
+	return SSIM_STR_LIT("Success");
 }
 

@@ -2,24 +2,31 @@
 	This is the entry point for the StuffSim engine exe. 
 */
 
-#include <iostream>
-#include <chrono>
-#include <thread>
-
-#include "ss_os.h"
+#include <stdio.h>
+#include <string>
 #include "ss_main.h"
 
-using namespace StuffSim;
+
+#include "os_tests.h"
+#include "path_tests.h"
+
+#include "ss_iostream.h"
+
+using StuffSim::StuffSimOS;
+
 
 StuffSimExitStatus startStuffSim()
-{	
+{
 	StuffSimOS os;
 	os.setStdIOTarget(StuffSimOS::StdIOTarget::Console);
-
 	os.openConsole();
 
-	std::cout << "Hello engine!" << std::endl;
+	run_os_tests(os);
 
-	getchar();
+	std::cout << std::endl << std::endl;
+
+	run_path_tests();
+
+	getchar();	
 	return StuffSimExitStatus::OK;
 }

@@ -7,11 +7,12 @@
 
 std::string StuffSim::OSStringToCharString(const OSString& stringToConvert)
 {
-	//setup converter
-	typedef std::codecvt_utf16<wchar_t> convert_type;
-	std::wstring_convert<convert_type, wchar_t> converter;
 
-	return converter.to_bytes(stringToConvert);
+	//setup converter
+	typedef std::codecvt_utf8<wchar_t> convert_typeX;
+	std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+	return converterX.to_bytes(stringToConvert);
 }
 
 #endif // SS_STRING_UTIL_H

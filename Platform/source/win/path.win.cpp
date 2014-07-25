@@ -3,44 +3,26 @@
 */
 
 #include "path.h"
+
+#pragma comment(lib, "Shlwapi.lib")
+
 using namespace StuffSim;
 
-#define NUM_ILLEGAL_TOKENS 1
 
 //structures and classes
 struct Path::OSSpecificStateImpl
 {
-	const OSString m_volumePathDivider = SS_STR_LIT(":\\");
-	const OSChar m_dirDivider = '\\';
-	const OSChar m_rootOfCurrentDisk = '\\';	
-	static const OSString m_illegalPathStringTokens[NUM_ILLEGAL_TOKENS]; //initialized all the way at the bottom (along with other statics)
-
+	static const OSString m_volumePathDivider;
+	static const OSChar m_dirDivider;
+	static const OSChar m_rootOfCurrentDisk;
+	
 	OSSpecificStateImpl() {} //default
 	OSSpecificStateImpl(const OSSpecificStateImpl& other) { }
 };
 
-Path::StaticPathState::StaticPathState()
-{
-	//set the executable path
-	OSChar pathBuffer[_MAX_PATH];
-	int pathLen = GetModuleFileNameW(NULL, pathBuffer, _MAX_PATH);
-	s_executablePath = Path(pathBuffer);
-	
-	if (pathLen == 0)
-	{
-		//TODO: log error
-	}
-}
-
-StuffSim::Path::StaticPathState::~StaticPathState()
-{
-
-}
-
-
 
 //constructors
-Path::Path() : m_osSpecificState(new OSSpecificStateImpl), m_valid(false) { } //default
+Path::Path() : m_osSpecificState(new OSSpecificStateImpl), m_valid(false), m_drive(0) { } //default
 
 Path::Path(OSString path) : m_osSpecificState(new OSSpecificStateImpl)
 {
@@ -52,7 +34,7 @@ Path::Path(const Path& path) //copy
 	, m_valid(path.m_valid)
 	, m_drive(path.m_drive)
 	, m_fullPath(path.m_fullPath)
-	, m_pathString(path.m_pathString) { }
+	, m_full(path.m_full) { }
 
 
 //destructors
@@ -63,26 +45,59 @@ Path::~Path()
 
 
 //public functions
-//finds directory of file, or returns copy of self. 
-Path Path::pathDir() const
-{
-	size_t indexOfLastSlash = m_fullPath.find_last_of(m_osSpecificState->m_dirDivider);
-	if (indexOfLastSlash == OSString::npos)
-	{
-		return Path(m_fullPath);
-	}
-	if (indexOfLastSlash == m_fullPath.length() - 1)
-	{
-		return *this;
-	}
 
-	return Path(m_fullPath.substr(0, indexOfLastSlash+1));
+void Path::makeFullyResolved()
+{
+	if (m_drive != 0)
+		return;
+
+	m_fullPath = getExecutablePath().appendPathStr(m_fullPath);
+	initWithString(m_fullPath);
 }
+
+
+void Path::normalize()
+{
+	OSChar buffer[MAX_PATH];
+	bool success = PathCanonicalizeW(buffer, getFullPathStr().c_str()) != 0;
+
+	if (success)
+		initWithString(buffer);
+	else
+	{
+		//TODO: log error
+	}
+}
+
 
 Path Path::getExecutablePath()
-{	
-	return Path(m_staticState.s_executablePath);
+{
+	return s_executablePath;
 }
+
+
+Path Path::pathDir() const
+{
+	return Path(pathDirStr());
+}
+
+
+OSString Path::pathDirStr() const
+{
+	size_t indexOfLastSlash = m_fullPath.find_last_of(OSSpecificStateImpl::m_dirDivider);
+
+	if (indexOfLastSlash == OSString::npos || indexOfLastSlash == m_fullPath.length() - 1)
+		return m_fullPath;
+	
+	return m_fullPath.substr(0, indexOfLastSlash + 1);
+}
+
+
+bool Path::isValid() const
+{
+	return PathFileExistsW(getFullPathStr().c_str()) != 0;
+}
+
 
 const OSString& Path::getFullPathStr() const 
 {
@@ -94,60 +109,51 @@ const OSString& Path::getFullPathStr() const
 Path& StuffSim::Path::operator=(const Path& other)
 {
 	if (this != &other)
-	{		
+	{
 		this->m_osSpecificState.reset(new OSSpecificStateImpl(*(other.m_osSpecificState)));
 		m_valid = other.m_valid;
 		m_fullPath = other.m_fullPath;
 		m_drive = other.m_drive;
-		m_pathString = other.m_pathString;		
+		m_fullPath = other.m_fullPath;
 	}
 	return *this;
 }
 
+
 Path Path::operator+(const Path& otherPath) const
 {
-	return Path(m_fullPath + otherPath.m_pathString);
+	return  (*this) + otherPath.m_fullPath;
 }
 
 
 Path Path::operator+(const OSString& otherPathString) const
 {
-	return Path(m_fullPath + otherPathString);
+	bool thisHasSlash = m_fullPath.back() == OSSpecificStateImpl::m_dirDivider;
+	bool otherHasSlash = otherPathString.front() == OSSpecificStateImpl::m_dirDivider;
+
+	//try to concatenate the paths, assuming that the end of this path is actually a directory
+	return Path(appendPathStr(otherPathString));
 }
-
-
-
-//////////////////////////////////////////////////////////////////////////
-// UNIMPLEMENTED
-void Path::normalize()
-{
-	//tokenize m_statePath. find special tokens, and modify the path accordingly.
-
-}
-
-bool Path::isValid() const
-{
-	return true;
-}
-
-std::uint32_t Path::getSize() const
-{
-	return 0;
-}
-
-bool Path::isFile() const
-{
-	return true;
-}
-
-bool Path::isDir() const
-{
-	return true;
-}
-//////////////////////////////////////////////////////////////////////////
 
 
 //private
+Path Path::initExecutablePath()
+{
+	//set the executable path
+	OSChar pathBuffer[_MAX_PATH];
+	int pathLen = GetModuleFileNameW(NULL, pathBuffer, _MAX_PATH);
+
+	if (pathLen == 0)
+	{
+		//TODO: log error
+		return Path();
+	}
+	else
+	{
+		return Path(pathBuffer);
+	}
+}
+
 void Path::initWithString(OSString path)
 {
 	if (path.empty())
@@ -162,10 +168,10 @@ void Path::initWithString(OSString path)
 	m_drive = extractDrive(path);
 
 	if (m_drive == 0) //not a full path
-		m_pathString = path;
+		m_fullPath = path;
 	else
 	{
-		m_pathString = path.substr(3, path.length() - 2);
+		m_fullPath = path.substr(3, path.length() - 2);
 		m_fullPath = path;
 	}
 
@@ -179,8 +185,7 @@ void Path::initWithString(OSString path)
 	{
 		//expensive:
 		Path fullPathAttempt = getExecutablePath() + path;
-		fullPathAttempt.normalize();
-		m_fullPath = fullPathAttempt.m_fullPath;				
+		fullPathAttempt.normalize();			
 		m_valid = fullPathAttempt.isValid(); 
 	}
 	else //path is full and invalid.
@@ -189,10 +194,27 @@ void Path::initWithString(OSString path)
 	}
 }
 
+
+OSString Path::appendPathStr(const OSString& otherPathStr) const
+{
+	bool thisHasSlash = m_fullPath.back() == OSSpecificStateImpl::m_dirDivider;
+	bool otherHasSlash = otherPathStr.front() == OSSpecificStateImpl::m_dirDivider;
+
+	if (thisHasSlash && otherHasSlash)
+		return m_fullPath + otherPathStr.substr(1, otherPathStr.length() - 1);
+	else if (!thisHasSlash && !otherHasSlash)
+		return m_fullPath + OSSpecificStateImpl::m_dirDivider + otherPathStr;
+	else
+		return m_fullPath + otherPathStr;
+}
+
+
+
 OSChar Path::extractDrive(const OSString& path)
 {
 	//if a drive is specified, it's a full path
-	size_t indexOfVolPathDivider = path.find(m_osSpecificState->m_volumePathDivider);
+	size_t indexOfVolPathDivider = path.find(OSSpecificStateImpl::m_volumePathDivider);
+
 	if (indexOfVolPathDivider != OSString::npos)
 		return path[0];
 	else
@@ -202,7 +224,9 @@ OSChar Path::extractDrive(const OSString& path)
 
 
 //statics
-SS_MARK_GLOBAL Path::StaticPathState Path::m_staticState;
-const OSString Path::OSSpecificStateImpl::m_illegalPathStringTokens[] = { SS_STR_LIT(":") };
-StuffSim::Path StuffSim::Path::StaticPathState::s_executablePath;
+SSIM_MARK_GLOBAL const OSChar Path::OSSpecificStateImpl::m_dirDivider = '\\';
+SSIM_MARK_GLOBAL const OSChar Path::OSSpecificStateImpl::m_rootOfCurrentDisk = '\\';
+SSIM_MARK_GLOBAL const OSString Path::OSSpecificStateImpl::m_volumePathDivider = SSIM_STR_LIT(":\\");
+
+SSIM_MARK_GLOBAL StuffSim::Path Path::s_executablePath = Path::initExecutablePath();
 

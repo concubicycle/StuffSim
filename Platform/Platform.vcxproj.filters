@@ -36,7 +36,14 @@
     <ClInclude Include="include\ss_string_util.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="include\thread_pool.h" />
+    <ClInclude Include="tests\os_tests.h" />
+    <ClInclude Include="tests\path_tests.h" />
+    <ClInclude Include="include\thread_pool.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ss_iostream.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\win\path.win.cpp">
@@ -58,6 +65,11 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\ss_main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\os_tests.cpp" />
+    <ClCompile Include="tests\path_tests.cpp" />
+    <ClCompile Include="source\ss_iostream.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

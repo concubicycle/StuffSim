@@ -14,6 +14,7 @@ namespace StuffSim
 	std::string OSStringToCharString(const OSString& stringToConvert);
 
 
+
 	/*~~ Inline functions ~~*/
 
 	// trim from start
