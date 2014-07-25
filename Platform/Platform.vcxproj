@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\dll_loader.cpp" />
+    <ClCompile Include="source\path.cpp" />
     <ClCompile Include="source\ss_main.cpp" />
     <ClCompile Include="source\ss_iostream.cpp" />
     <ClCompile Include="source\win\dll_loader.win.cpp" />

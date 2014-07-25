@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <memory>
 #include <utility>
-#include <Shlwapi.h>
+
 
 #include "ss_string_util.h"
 
@@ -42,6 +42,9 @@ namespace StuffSim
 
 		/* Does path exist? */
 		bool isValid() const;
+
+		/* Is it a fully resolved path? */
+		bool isFull() const;
 
 		const OSString& getFullPathStr() const;
 

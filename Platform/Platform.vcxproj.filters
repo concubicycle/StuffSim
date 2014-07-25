@@ -13,6 +13,9 @@
     <Filter Include="Source\Linux">
       <UniqueIdentifier>{77ff2c4b-7ae7-484b-8f45-267090cf3d79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_Tests">
+      <UniqueIdentifier>{08c0fc66-693d-40dd-9bb2-2897f9e66891}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ss_system_typenames.h">
@@ -36,13 +39,17 @@
     <ClInclude Include="include\ss_string_util.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="tests\os_tests.h" />
-    <ClInclude Include="tests\path_tests.h" />
     <ClInclude Include="include\thread_pool.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="include\ss_iostream.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\os_tests.h">
+      <Filter>_Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\path_tests.h">
+      <Filter>_Tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,10 +74,17 @@
     <ClCompile Include="source\ss_main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="tests\os_tests.cpp" />
-    <ClCompile Include="tests\path_tests.cpp" />
     <ClCompile Include="source\ss_iostream.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\path.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\os_tests.cpp">
+      <Filter>_Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\path_tests.cpp">
+      <Filter>_Tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
